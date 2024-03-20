@@ -30,7 +30,7 @@ The Fans-CRM API, developed using the NestJS framework, is a comprehensive solut
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/your-username/fans-crm-api.git
+   git clone https://github.com/ephy-bayru/Fans-CRM-API.git
    cd fans-crm-api
    ```
 
