@@ -7,6 +7,8 @@ import {
   IsPhoneNumber,
   IsAlphanumeric,
   Matches,
+  IsOptional,
+  IsBoolean,
 } from 'class-validator';
 
 export class AddUserDto {
@@ -77,4 +79,8 @@ export class AddUserDto {
   @IsPhoneNumber()
   @Matches(/^[0-9]+$/)
   phone?: string;
+
+  @IsOptional()
+  @IsBoolean({ message: 'canLogin must be a boolean value' })
+  canLogin?: boolean;
 }

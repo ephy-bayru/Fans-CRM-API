@@ -18,6 +18,7 @@ import {
   Matches,
 } from 'class-validator';
 import { ValidationService } from '../services/validation.service';
+import * as bcrypt from 'bcrypt';
 @Table({
   tableName: 'users',
   timestamps: true,
@@ -86,6 +87,13 @@ export class User extends Model<User> {
   @Matches(/^[0-9]+$/)
   phone?: string;
 
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  })
+  canLogin: boolean;
+
   @CreatedAt
   createdAt: Date;
 
@@ -100,6 +108,12 @@ export class User extends Model<User> {
   deleted?: boolean;
 
   @BeforeCreate
+  static async hashPassword(user: User) {
+    if (user.canLogin && user.password) {
+      user.password = await bcrypt.hash(user.password, 10);
+    }
+  }
+
   @BeforeUpdate
   static async validate(user: User) {
     const validationService = new ValidationService();
