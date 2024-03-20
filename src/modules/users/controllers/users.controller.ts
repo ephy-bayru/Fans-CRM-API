@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  UseGuards,
   UsePipes,
   Version,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ import {
 } from '../documentation/users.controller.documentation';
 import { ApiTags } from '@nestjs/swagger';
 import { UserResponseDto } from '../dto/user-response.dto';
+import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
 
 @ApiTags('Users')
 @Controller({ path: 'users', version: '1' })
@@ -25,6 +27,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Version('1')
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   @GetUserDocs()
   async getUser(@Param('id') id: string): Promise<UserResponseDto> {
@@ -36,6 +39,7 @@ export class UsersController {
   }
 
   @Version('1')
+  @UseGuards(JwtAuthGuard)
   @Post('')
   @UsePipes(UniqueUserValidationPipe)
   @CreateUserDocs()
