@@ -15,4 +15,7 @@ export class UserResponseDto {
 
   @ApiProperty({ example: 'ephybayru@gmail.com' })
   email: string;
+
+  @ApiProperty({ example: true })
+  canLogin: boolean;
 }
