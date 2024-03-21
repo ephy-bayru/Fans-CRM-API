@@ -7,6 +7,7 @@ import { GlobalExceptionFilter } from './common/filters/global-exception.filter'
 import { LoggerService } from './common/services/logger.service';
 import { ConfigService } from '@nestjs/config';
 import { LoggingInterceptor } from './common/utils/logging.interceptor';
+import { Sequelize } from 'sequelize-typescript';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -41,6 +42,17 @@ async function bootstrap() {
 
   app.useGlobalFilters(new GlobalExceptionFilter(logger));
   app.useGlobalInterceptors(new LoggingInterceptor(logger));
+
+  const sequelize = app.get(Sequelize);
+
+  try {
+    await sequelize.authenticate();
+    console.log(
+      'Connection to the database has been established successfully.',
+    );
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
 
   const port = configService.get('PORT', 3000);
   await app.listen(port);
