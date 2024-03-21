@@ -35,6 +35,7 @@ export class User extends Model<User> {
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
+    field: 'firstName',
   })
   @Length(2, 255)
   @IsNotEmpty()
@@ -43,6 +44,7 @@ export class User extends Model<User> {
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
+    field: 'lastName',
   })
   @Length(2, 255)
   @IsNotEmpty()
@@ -53,6 +55,7 @@ export class User extends Model<User> {
     type: DataType.STRING(255),
     allowNull: false,
     unique: true,
+    field: 'userName',
   })
   @IsString()
   @IsNotEmpty()
@@ -91,12 +94,23 @@ export class User extends Model<User> {
     type: DataType.BOOLEAN,
     allowNull: false,
     defaultValue: false,
+    field: 'canLogin',
   })
   canLogin: boolean;
 
+  @Column({
+    allowNull: false,
+    type: DataType.DATE,
+    field: 'createdAt',
+  })
   @CreatedAt
   createdAt: Date;
 
+  @Column({
+    allowNull: false,
+    type: DataType.DATE,
+    field: 'updatedAt',
+  })
   @UpdatedAt
   updatedAt: Date;
 
