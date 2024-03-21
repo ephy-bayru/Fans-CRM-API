@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   async validateUser(identifier: string, password: string): Promise<any> {
-    console.log('i am here');
+    console.log('validation on progress...', identifier, password);
     const user = await this.usersService.findOne(identifier);
     if (!user) {
       throw new NotFoundException(
